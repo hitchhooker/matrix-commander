@@ -90,13 +90,13 @@ except ImportError:
 
 
 # version number
-VERSION = "2021-March-14"
+VERSION = "2021-March-17"
 # matrix-commander
 PROG_WITHOUT_EXT = os.path.splitext(os.path.basename(__file__))[0]
 # matrix-commander.py
 PROG_WITH_EXT = os.path.basename(__file__)
 # file to store credentials in case you want to run program multiple times
-CREDENTIALS_FILE_DEFAULT = "./credentials.json"  # login credentials JSON file
+CREDENTIALS_FILE_DEFAULT = "credentials.json"  # login credentials JSON file
 # e.g. ~/.config/matrix-commander/
 CREDENTIALS_DIR_LASTRESORT = (
     os.path.expanduser("~/.config/")
@@ -814,6 +814,18 @@ def determine_credentials_file() -> str:
     # so that when it is created it is created where specifically specified
     # or in local dir (but not in last resort dir ~/.config/...)
     return credentials_file
+
+def determine_config_dir() -> str:
+
+    if not pargs.config:
+        return None
+    pargs_config_norm = os_path_normpath(pargs.config)
+    if os.path.isdir(pargs.config):
+            logger.debug(
+                "Found an existing store in directory "
+                f'"{pargs_store_norm}" (local or arguments). '
+                "It will be used."
+            )
 
 
 def determine_store_dir() -> str:
@@ -3052,6 +3064,7 @@ if __name__ == "__main__":  # noqa: C901 # ignore mccabe if-too-complex
         "--config",
         required=False,
         type=str,
+        default=CREDENTIALS_FILE_DEFAULT,
         help="Location of a config file. By default, no "
         "config file is used. "
         "If this option is provided, the provided file name "
