@@ -96,7 +96,7 @@ PROG_WITHOUT_EXT = os.path.splitext(os.path.basename(__file__))[0]
 # matrix-commander.py
 PROG_WITH_EXT = os.path.basename(__file__)
 # file to store credentials in case you want to run program multiple times
-CREDENTIALS_FILE_DEFAULT = "credentials.json"  # login credentials JSON file
+CREDENTIALS_FILE_DEFAULT = "./credentials.json"  # login credentials JSON file
 # e.g. ~/.config/matrix-commander/
 CREDENTIALS_DIR_LASTRESORT = (
     os.path.expanduser("~/.config/")
